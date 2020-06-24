@@ -1,3 +1,4 @@
+from sys import stdin
 from os import path
 from dataclasses import dataclass
 
@@ -43,7 +44,10 @@ def get_recipe_filepath(recipe_name, recipe_category):
 
 
 def __get_multiline_as_string():
-    pass
+    print('Once you have finished, press enter for a new line then press Ctrl+d for Unix systems, Ctrl+z for Windows systems.\n\n')
+    lines = stdin.readlines()
+    print('\n')
+    return ' \n'.join(lines)
 
 
 if __name__ == '__main__':

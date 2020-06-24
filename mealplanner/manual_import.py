@@ -100,10 +100,12 @@ def manual_recipe_import():
                 raise
     
     # write file contents to file
-    
+    with open(filepath, 'w') as recipe_file:
+        recipe_file.write(file_contents)
     
     # read file contents from file
-    
+    with open(filepath, 'r') as recipe_file:
+        print(recipe_file.read()) # print file contents
 
 
 def create_recipe_from_template(recipe_object):

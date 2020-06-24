@@ -1,4 +1,19 @@
 from os import path
+from dataclasses import dataclass
+
+@dataclass
+class Recipe:
+    name: str = ''
+    category: str = ''
+    total_time: int = 0
+    prep_time: int = 0
+    cooking_time: int = 0
+    rating: int = 0
+    source: str = ''
+    servings: int = 0
+    calories: float = 0.0
+    ingredients: str = ''
+    instructions: str = ''
 
 def get_recipe_filepath(recipe_name, recipe_category):
     filename = recipe_name.lower().replace(' ', '_') + '.md'

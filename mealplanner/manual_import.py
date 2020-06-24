@@ -18,11 +18,82 @@ class Recipe:
 
 
 def manual_recipe_import():
-    pass
+    recipe = Recipe()
+    
+    # get name
+    recipe.name = input('Enter recipe name: ')
+    
+    # get category
+    recipe.category = input('Enter recipe category: ')
+    
+    # get prep time
+    while True:
+        try:
+            input_val = int(input('Enter recipe prep time (integer): '))
+            recipe.prep_time = input_val
+            break
+        except ValueError:
+            print('Invalid Input, must be an integer value.')
+            
+    # get cooking time
+    while True:
+        try:
+            input_val = int(input('Enter recipe cooking time (integer): '))
+            recipe.cooking_time = input_val
+            break
+        except ValueError:
+            print('Invalid Input, must be an integer value.')
+
+    # calculate total time (prep time + cooking time)
+    recipe.total_time = recipe.prep_time + recipe.cooking_time
+
+    # get rating
+    while True:
+        try:
+            input_val = float(input('Enter recipe rating (decimal/float): '))
+            recipe.rating = input_val
+            break
+        except ValueError:
+            print('Invalid Input, must be a decimal/float value (eg 9.0 or 9.5).')
+        
+    # get source
+    recipe.source = input('Enter recipe source: ')
+    
+    # get servings
+    while True:
+        try:
+            input_val = int(input('Enter recipe servings (integer): '))
+            recipe.servings = input_val
+            break
+        except ValueError:
+            print('Invalid Input, must be an integer value.')
+
+    # get calories
+    while True:
+        try:
+            input_val = float(input('Enter recipe calories (decimal/float): '))
+            recipe.calories = input_val
+            break
+        except ValueError:
+            print('Invalid Input, must be a decimal/float value (eg 100.0 or 100.5).')
+    
+    # get ingredients
+    print('Enter recipe ingredients: ')
+    recipe.ingredients = __get_multiline_as_string()
+    
+    # get instructions
+    print('Enter recipe instructions: ')
+    recipe.instructions = __get_multiline_as_string()
+    
+    # TODO: create from template
+    
+    # TODO: write to file
+    
+    # TODO: read back from file for output
 
 
 def create_recipe_from_template(recipe_object):
-    pass
+    pass # TODO
 
 
 def get_recipe_filepath(recipe_name, recipe_category):

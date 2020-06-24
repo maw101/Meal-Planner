@@ -1,6 +1,7 @@
 from sys import stdin
 from os import path
 from dataclasses import dataclass
+from jinja2 import Environment, FileSystemLoader
 
 @dataclass
 class Recipe:
@@ -93,7 +94,10 @@ def manual_recipe_import():
 
 
 def create_recipe_from_template(recipe_object):
-    pass # TODO
+    templates_loader = FileSystemLoader(searchpath='./templates/')
+    templates_environment = Environment(loader=templates_loader)
+    template_recipe = templates_environment.get_template('template_recipe.md')
+    return template_recipe.render(recipe=recipe_object)
 
 
 def get_recipe_filepath(recipe_name, recipe_category):

@@ -15,6 +15,15 @@ class Recipe:
     ingredients: str = ''
     instructions: str = ''
 
+
+def manual_recipe_import():
+    pass
+
+
+def create_recipe_from_template(recipe_object):
+    pass
+
+
 def get_recipe_filepath(recipe_name, recipe_category):
     filename = recipe_name.lower().replace(' ', '_') + '.md'
     filepath = f'recipes/{recipe_category}/{filename}'
@@ -31,3 +40,11 @@ def get_recipe_filepath(recipe_name, recipe_category):
                 filepath = f'recipes/{recipe_category}/{filename}'
                 attempt += 1 # increment attempt number for case of loop
     return filepath
+
+
+def __get_multiline_as_string():
+    pass
+
+
+if __name__ == '__main__':
+    manual_recipe_import()

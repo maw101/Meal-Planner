@@ -1,5 +1,6 @@
 from sys import stdin
-from os import path
+from os import path, makedirs
+import errno
 from dataclasses import dataclass
 from jinja2 import Environment, FileSystemLoader
 
@@ -86,11 +87,23 @@ def manual_recipe_import():
     print('Enter recipe instructions: ')
     recipe.instructions = __get_multiline_as_string()
     
-    # TODO: create from template
+    # perform processing for recipe storage
+    file_contents = create_recipe_from_template(recipe)
+    filepath = get_recipe_filepath(recipe.name, recipe.category)
+
+    # ensure directories exist
+    if not path.exists(path.dirname(filepath)):
+        try:
+            makedirs(path.dirname(filepath))
+        except OSError as exc: # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
     
-    # TODO: write to file
+    # write file contents to file
     
-    # TODO: read back from file for output
+    
+    # read file contents from file
+    
 
 
 def create_recipe_from_template(recipe_object):

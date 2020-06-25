@@ -57,3 +57,5 @@ def get_meal(filepath):
     meal.ingredients = ingredients
     return meal
 
+if __name__ == '__main__':
+    pass

@@ -3,6 +3,9 @@ from typing import List
 import re
 import os
 
+# get current working directory
+CWD = os.getcwd()
+
 @dataclass
 class Meal:
     name: str = ''
@@ -57,10 +60,22 @@ def get_meal(filepath):
     meal.ingredients = ingredients
     return meal
 
+def get_meals_from_file():
+    recipes_directory = os.path.join(CWD, 'recipes')
+    # create dictionary of meals by category
+    meals = {}
+    
+    # get category folder names
+    categories = [dI for dI in os.listdir(recipes_directory)]
+    
+    for category in categories:
+        category_directory = os.path.join(recipes_directory, category)
+        # add category to the dictionary
+        meals[category] = [get_meal(os.path.join(category_directory, file)) for file in os.listdir(category_directory) if os.path.isfile(os.path.join(category_directory, file))]
+
+    return meals
 
 def get_plan_details():
-    # get current working directory
-    CWD = os.getcwd()
     # get actual categories
     possible_categories = [dI for dI in os.listdir(os.path.join(CWD, 'recipes'))]
     print('\nPossible Categories: ', ', '.join(possible_categories))

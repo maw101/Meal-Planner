@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List
 import re
+import os
 
 @dataclass
 class Meal:
@@ -16,7 +17,6 @@ def get_meal(filepath):
         
     # read file contents from file
     with open(filepath, 'r') as recipe_file:
-        
         searching_for = 'name'
         searching_for_regex = '# (.*)'  # pattern for recipe name
         
@@ -56,6 +56,31 @@ def get_meal(filepath):
         
     meal.ingredients = ingredients
     return meal
+
+
+def get_plan_details():
+    # get current working directory
+    CWD = os.getcwd()
+    # get actual categories
+    possible_categories = [dI for dI in os.listdir(os.path.join(CWD, 'recipes'))]
+    print('\nPossible Categories: ', ', '.join(possible_categories))
+    # get users categories
+    categories_input = input('Enter categories to include each day from the above list (separate by commas): ')
+    categories_input = categories_input.split(',')
+    categories_input = [cat.strip().lower().replace(' ', '_') for cat in categories_input]
+    # only take valid categories
+    categories = [cat for cat in categories_input if cat in possible_categories]
+    # number of days
+    while True:
+        try:
+            input_val = int(input('Enter number of days to generate plan for (integer): '))
+            number_of_days = input_val
+            break
+        except ValueError:
+            print('Invalid Input, must be an integer value.')
+    
+    return (number_of_days, categories)
+
 
 if __name__ == '__main__':
     pass

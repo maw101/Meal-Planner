@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from typing import List
 import re
 import os
+import random
 
 # get current working directory
 CWD = os.getcwd()
@@ -95,7 +96,17 @@ def get_plan_details():
             print('Invalid Input, must be an integer value.')
     
     return (number_of_days, categories)
-
-
+    
+def generate_plan(number_of_days, categories):
+    all_meals = get_meals_from_file()
+    meals_by_category = []
+    
+    # iterate over each category
+    for category in categories:
+        meals_by_category.append(random.choices(all_meals[category], k=number_of_days))
+    
+    return list(zip(*meals_by_category)) # *-operator to unpack the arguments
+    
 if __name__ == '__main__':
-    pass
+    number_of_days, categories = get_plan_details()
+    plan = generate_plan(number_of_days, categories)

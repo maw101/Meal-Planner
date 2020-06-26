@@ -97,6 +97,16 @@ def get_plan_details():
     
     return (number_of_days, categories)
     
+def print_plan(plan):
+    print('\n----- Meal Plan -----\n')
+    # print each day
+    for day_number, day in enumerate(plan, start=1):
+        print('Day', day_number)
+        for meal in day:
+            print('\t %s - %s' % (meal.category, meal.name))
+
+    print('\n---------------------\n')
+    
 def generate_plan(number_of_days, categories):
     all_meals = get_meals_from_file()
     meals_by_category = []
@@ -110,3 +120,4 @@ def generate_plan(number_of_days, categories):
 if __name__ == '__main__':
     number_of_days, categories = get_plan_details()
     plan = generate_plan(number_of_days, categories)
+    print_plan(plan)

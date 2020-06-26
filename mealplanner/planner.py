@@ -96,6 +96,11 @@ def get_plan_details():
             print('Invalid Input, must be an integer value.')
     
     return (number_of_days, categories)
+
+def confirm_plan(plan):
+    print_plan(plan)
+    
+    # TODO: complete menu etc here
     
 def print_plan(plan):
     print('\n----- Meal Plan -----\n')
@@ -120,4 +125,5 @@ def generate_plan(number_of_days, categories):
 if __name__ == '__main__':
     number_of_days, categories = get_plan_details()
     plan = generate_plan(number_of_days, categories)
-    print_plan(plan)
+
+    confirm_plan(plan)

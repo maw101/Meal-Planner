@@ -117,7 +117,8 @@ def create_recipe_from_template(recipe_object):
 
 def get_recipe_filepath(recipe_name, recipe_category):
     filename = recipe_name.lower().replace(' ', '_') + '.md'
-    filepath = f'recipes/{recipe_category}/{filename}'
+    parsed_category = recipe_category.strip().lower().replace(' ', '_')
+    filepath = f'recipes/{parsed_category}/{filename}'
     # determine if file exists
     if path.isfile(filepath):
         overwrite_file = input('There already exists a recipe with these details, overwrite? \'Y\' or \'N\'')
@@ -128,7 +129,7 @@ def get_recipe_filepath(recipe_name, recipe_category):
             # loop while we have a duplicate filename
             while path.isfile(filepath):
                 filename = recipe_name.lower().replace(' ', '_') + f'_{attempt}.md'
-                filepath = f'recipes/{recipe_category}/{filename}'
+                filepath = f'recipes/{parsed_category}/{filename}'
                 attempt += 1 # increment attempt number for case of loop
     return filepath
 

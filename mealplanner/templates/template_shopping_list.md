@@ -4,6 +4,4 @@
 ## {{meal.name}}
 {% for ingredient in meal.ingredients %}
 - {{ingredient}}
-{% endfor %}
-{% endfor %}
-{% endfor %}
+{% endfor %}{% endfor %}{% endfor %}

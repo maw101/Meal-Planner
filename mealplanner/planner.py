@@ -128,6 +128,20 @@ def export_plan(plan):
     with open(filepath, 'w') as plan_file:
         plan_file.write(file_contents)
 
+def create_shopping_list_from_template(plan):
+    templates_loader = FileSystemLoader(searchpath='./templates/')
+    templates_environment = Environment(loader=templates_loader)
+    template_shopping_list = templates_environment.get_template('template_shopping_list.md')
+    return template_shopping_list.render(plan=plan)
+
+def export_shopping_list(plan):
+    file_contents = create_shopping_list_from_template(plan)
+    formatted_datetime = datetime.now().strftime('%Y-%m-%d-%H:%M:%S')
+    filepath = 'exported_shopping_list-' + formatted_datetime + '.md'
+    # write file contents to file
+    with open(filepath, 'w') as shopping_list_file:
+        shopping_list_file.write(file_contents)
+
 def generate_plan(number_of_days, categories):
     all_meals = get_meals_from_file()
     meals_by_category = []
@@ -145,3 +159,4 @@ if __name__ == '__main__':
     confirm_plan(plan)
     
     export_plan(plan)
+    export_shopping_list(plan)

@@ -3,6 +3,8 @@ from typing import List
 import re
 import os
 import random
+from jinja2 import Environment, FileSystemLoader
+from datetime import datetime
 
 # get current working directory
 CWD = os.getcwd()
@@ -112,6 +114,20 @@ def print_plan(plan):
 
     print('\n---------------------\n')
     
+def create_plan_from_template(plan):
+    templates_loader = FileSystemLoader(searchpath='./templates/')
+    templates_environment = Environment(loader=templates_loader)
+    template_plan = templates_environment.get_template('template_meal_plan.md')
+    return template_plan.render(plan=plan)
+
+def export_plan(plan):
+    file_contents = create_plan_from_template(plan)
+    formatted_datetime = datetime.now().strftime('%Y-%m-%d-%H:%M:%S')
+    filepath = 'exported_plan-' + formatted_datetime + '.md'
+    # write file contents to file
+    with open(filepath, 'w') as plan_file:
+        plan_file.write(file_contents)
+
 def generate_plan(number_of_days, categories):
     all_meals = get_meals_from_file()
     meals_by_category = []
@@ -127,3 +143,5 @@ if __name__ == '__main__':
     plan = generate_plan(number_of_days, categories)
 
     confirm_plan(plan)
+    
+    export_plan(plan)

@@ -130,7 +130,11 @@ def replace_meal(plan, day_number):
     else:
         category = valid_meal_categories[0].strip().lower()
     
-    # TODO: print all meals of this category as options
+    all_categories_meals = get_meals_from_file()
+    
+    print('\nYour options for the', category, 'replacement:\n')
+    
+    print_category(all_categories_meals, category)
     
     # TODO: get number of meal to replace
     

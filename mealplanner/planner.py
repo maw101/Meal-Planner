@@ -247,9 +247,12 @@ def generate_plan(number_of_days, categories):
     return list(zip(*meals_by_category)) # *-operator to unpack the arguments
     
 if __name__ == '__main__':
-    print_welcome_header()
+    # loop forever
+    while True:
+        print_welcome_header()
+        
+        number_of_days, categories = get_plan_details()
     
-    number_of_days, categories = get_plan_details()
-    plan = generate_plan(number_of_days, categories)
-
-    confirm_plan(plan)
+        plan = generate_plan(number_of_days, categories)
+    
+        confirm_plan(plan)

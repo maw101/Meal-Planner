@@ -99,6 +99,15 @@ def get_plan_details():
     
     return (number_of_days, categories)
 
+def print_category(all_categories, category_name):
+    category = all_categories[category_name]
+    # print formatted category name
+    print(category_name.replace('_', ' ').title())
+    print('-' * (len(category_name) + 2)) # spacer between category and meal
+    # print each meal in turn
+    for (i, meal) in enumerate(category, start=1):
+        print('%d) %s' % (i, meal.name)) 
+
 def confirm_plan(plan):
     print_plan(plan)
     
@@ -157,6 +166,3 @@ if __name__ == '__main__':
     plan = generate_plan(number_of_days, categories)
 
     confirm_plan(plan)
-    
-    export_plan(plan)
-    export_shopping_list(plan)

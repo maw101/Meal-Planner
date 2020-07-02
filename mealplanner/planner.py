@@ -99,10 +99,99 @@ def get_plan_details():
     
     return (number_of_days, categories)
 
-def confirm_plan(plan):
-    print_plan(plan)
+def print_category(all_categories, category_name):
+    category = all_categories[category_name]
+    # print formatted category name
+    print(category_name.replace('_', ' ').title())
+    print('-' * (len(category_name) + 2)) # spacer between category and meal
+    # print each meal in turn
+    for (i, meal) in enumerate(category, start=1):
+        print('%d) %s' % (i, meal.name))
+
+def replace_meal(plan, day_number):
+    days_meals = list(plan[day_number - 1])
+    valid_meal_categories = [meal.category.strip().lower() for meal in days_meals]
     
-    # TODO: complete menu etc here
+    print('\nReplacing Meal on Day', day_number, ':')
+    
+    if len(valid_meal_categories) != 1:
+        print('Valid Meal Categories:', ', '.join(valid_meal_categories))
+        
+        # get the meal category from the user
+        while True:
+            category = input('Which meal category? ')
+            category = category.strip().lower()
+            if category in valid_meal_categories:
+                break
+            else:
+                print('Invalid Category Entered')
+    
+    # if only one category, automatically select it
+    else:
+        category = valid_meal_categories[0].strip().lower()
+
+
+    all_categories_meals = get_meals_from_file()
+    
+    print('\nYour options for the', category, 'replacement:\n')
+    
+    print_category(all_categories_meals, category)
+    
+    # get the number of the meal to replace
+    while True:
+        try:
+            meal_number = int(input('Enter number of meal to replace current option with: '))
+            
+            # check is within our allowed range
+            if (meal_number >= 1) and (meal_number <= len(all_categories_meals[category])):
+                meal_number -= 1  # convert to zero based index
+                break
+    
+            # not within our allowed range
+            else:
+                print('Invalid Input, must be a valid number from the meals listed above.')
+
+        # handle case of non-integer input
+        except ValueError:
+            print('Invalid Input, must be an integer value.')
+
+    # find old meal index
+    for index, meal in enumerate(days_meals):
+        if meal.category.strip().lower() == category:
+            old_meal_index = index
+            break
+
+    # replace old meal with our new choice
+    days_meals[old_meal_index] = all_categories_meals[category][meal_number]
+
+    # convert the days meals back into tuple
+    plan[day_number - 1] = tuple(days_meals)
+
+    return plan    
+
+def confirm_plan(plan):
+    # loop until break
+    while True:
+        print_plan(plan)
+        
+        print('[Day Number] to Replace Meal for that Day')
+        print('[Enter] to Export Plan and Shopping List')
+        
+        choice = input()
+        
+        # check if integer input
+        try:
+            int_choice = int(choice)
+            replace_meal(plan, int_choice)
+        # not integer input
+        except ValueError:
+            if choice == '': # enter key
+                export_plan(plan)
+                export_shopping_list(plan)
+                print('Meal Plan and Shopping List Both Exported')
+                break
+            else:
+                print('Invalid Menu Option')
     
 def print_plan(plan):
     print('\n----- Meal Plan -----\n')
@@ -157,6 +246,3 @@ if __name__ == '__main__':
     plan = generate_plan(number_of_days, categories)
 
     confirm_plan(plan)
-    
-    export_plan(plan)
-    export_shopping_list(plan)

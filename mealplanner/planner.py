@@ -192,6 +192,11 @@ def confirm_plan(plan):
                 break
             else:
                 print('Invalid Menu Option')
+
+def print_welcome_header():
+    print('\n========================')
+    print('      Meal Planner      ')
+    print('========================\n')
     
 def print_plan(plan):
     print('\n----- Meal Plan -----\n')
@@ -242,6 +247,8 @@ def generate_plan(number_of_days, categories):
     return list(zip(*meals_by_category)) # *-operator to unpack the arguments
     
 if __name__ == '__main__':
+    print_welcome_header()
+    
     number_of_days, categories = get_plan_details()
     plan = generate_plan(number_of_days, categories)
 

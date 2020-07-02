@@ -108,6 +108,18 @@ def print_category(all_categories, category_name):
     for (i, meal) in enumerate(category, start=1):
         print('%d) %s' % (i, meal.name)) 
 
+def replace_meal(plan, day_number):
+    pass
+    # TODO: get category of meal to replace
+    
+    # TODO: print all meals of this category as options
+    
+    # TODO: get number of meal to replace
+    
+    # TODO: find old meal index, replace old meal with our new choice
+    
+    # TODO: return modified plan
+
 def confirm_plan(plan):
     print_plan(plan)
     

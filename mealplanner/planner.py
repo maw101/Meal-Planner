@@ -109,8 +109,26 @@ def print_category(all_categories, category_name):
         print('%d) %s' % (i, meal.name)) 
 
 def replace_meal(plan, day_number):
-    pass
-    # TODO: get category of meal to replace
+    days_meals = list(plan[day_number - 1])
+    valid_meal_categories = [meal.category.strip().lower() for meal in days_meals]
+    
+    print('\nReplacing Meal on Day', day_number, ':')
+    
+    if len(valid_meal_categories) != 1:
+        print('Valid Meal Categories:', ', '.join(valid_meal_categories))
+        
+        # get the meal category from the user
+        while True:
+            category = input('Which meal category? ')
+            category = category.strip().lower()
+            if category in valid_meal_categories:
+                break
+            else:
+                print('Invalid Category Entered')
+    
+    # if only one category, automatically select it
+    else:
+        category = valid_meal_categories[0].strip().lower()
     
     # TODO: print all meals of this category as options
     

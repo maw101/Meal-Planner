@@ -135,8 +135,24 @@ def replace_meal(plan, day_number):
     print('\nYour options for the', category, 'replacement:\n')
     
     print_category(all_categories_meals, category)
+
+    # get the number of the meal to replace
+    while True:
+        try:
+            meal_number = int(input('Enter number of meal to replace current option with: '))
+            
+            # check is within our allowed range
+            if (meal_number >= 1) and (meal_number <= len(all_categories_meals[category])):
+                meal_number -= 1  # convert to zero based index
+                break
     
-    # TODO: get number of meal to replace
+            # not within our allowed range
+            else:
+                print('Invalid Input, must be a valid number from the meals listed above.')
+
+        # handle case of non-integer input
+        except ValueError:
+            print('Invalid Input, must be an integer value.')
     
     # TODO: find old meal index, replace old meal with our new choice
     

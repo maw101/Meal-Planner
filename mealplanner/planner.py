@@ -106,7 +106,7 @@ def print_category(all_categories, category_name):
     print('-' * (len(category_name) + 2)) # spacer between category and meal
     # print each meal in turn
     for (i, meal) in enumerate(category, start=1):
-        print('%d) %s' % (i, meal.name)) 
+        print('%d) %s' % (i, meal.name))
 
 def replace_meal(plan, day_number):
     days_meals = list(plan[day_number - 1])
@@ -129,13 +129,14 @@ def replace_meal(plan, day_number):
     # if only one category, automatically select it
     else:
         category = valid_meal_categories[0].strip().lower()
-    
+
+
     all_categories_meals = get_meals_from_file()
     
     print('\nYour options for the', category, 'replacement:\n')
     
     print_category(all_categories_meals, category)
-
+    
     # get the number of the meal to replace
     while True:
         try:
@@ -153,7 +154,7 @@ def replace_meal(plan, day_number):
         # handle case of non-integer input
         except ValueError:
             print('Invalid Input, must be an integer value.')
-    
+
     # find old meal index
     for index, meal in enumerate(days_meals):
         if meal.category.strip().lower() == category:
@@ -166,12 +167,31 @@ def replace_meal(plan, day_number):
     # convert the days meals back into tuple
     plan[day_number - 1] = tuple(days_meals)
 
-    return plan
+    return plan    
 
 def confirm_plan(plan):
-    print_plan(plan)
-    
-    # TODO: complete menu etc here
+    # loop until break
+    while True:
+        print_plan(plan)
+        
+        print('[Day Number] to Replace Meal for that Day')
+        print('[Enter] to Export Plan and Shopping List')
+        
+        choice = input()
+        
+        # check if integer input
+        try:
+            int_choice = int(choice)
+            replace_meal(plan, int_choice)
+        # not integer input
+        except ValueError:
+            if choice == '': # enter key
+                export_plan(plan)
+                export_shopping_list(plan)
+                print('Meal Plan and Shopping List Both Exported')
+                break
+            else:
+                print('Invalid Menu Option')
     
 def print_plan(plan):
     print('\n----- Meal Plan -----\n')

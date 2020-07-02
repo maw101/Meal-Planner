@@ -154,9 +154,19 @@ def replace_meal(plan, day_number):
         except ValueError:
             print('Invalid Input, must be an integer value.')
     
-    # TODO: find old meal index, replace old meal with our new choice
-    
-    # TODO: return modified plan
+    # find old meal index
+    for index, meal in enumerate(days_meals):
+        if meal.category.strip().lower() == category:
+            old_meal_index = index
+            break
+
+    # replace old meal with our new choice
+    days_meals[old_meal_index] = all_categories_meals[category][meal_number]
+
+    # convert the days meals back into tuple
+    plan[day_number - 1] = tuple(days_meals)
+
+    return plan
 
 def confirm_plan(plan):
     print_plan(plan)
